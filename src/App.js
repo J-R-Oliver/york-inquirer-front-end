@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import ArticleList from './components/ArticleList';
 
 function App() {
-  return <></>;
+  return <ArticleList />;
 }
 
 export default App;
