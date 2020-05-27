@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const hostname = 'https://the-york-inquirer.herokuapp.com';
 
-const getArticles = () => {
+export const getArticles = () => {
   return axios
     .get(`${hostname}/api/articles`)
     .then(({ data: { articles } }) => {
@@ -10,4 +10,8 @@ const getArticles = () => {
     });
 };
 
-export default getArticles;
+export const getTopics = () => {
+  return axios.get(`${hostname}/api/topics`).then(({ data: { topics } }) => {
+    return topics;
+  });
+};

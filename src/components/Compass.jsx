@@ -4,7 +4,7 @@ const Compass = () => {
   return (
     <img
       src="/images/compass.png"
-      alt="discover topics"
+      alt="explore topics"
       height="30px"
       width="30px"
     />
