@@ -12,7 +12,8 @@ const ArticleCard = ({
   title,
   votes,
   comment_count,
-  topic
+  topic,
+  article_id
 }) => {
   const createdDate = formatDate(created_at);
 
@@ -20,7 +21,9 @@ const ArticleCard = ({
     <article>
       <Text>{author}</Text>
       <Text>{createdDate}</Text>
-      <Title>{title}</Title>
+      <Link to={`/${topic}/${article_id}`}>
+        <Title>{title}</Title>
+      </Link>
       <Text>
         <Votes votes={votes} />
         <Comments comment_count={comment_count} />

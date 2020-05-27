@@ -29,7 +29,13 @@ class ArticleList extends Component {
     return (
       <main>
         {articles.map(({ article_id, ...article }) => {
-          return <ArticleCard key={article_id} {...article} />;
+          return (
+            <ArticleCard
+              key={article_id}
+              article_id={article_id}
+              {...article}
+            />
+          );
         })}
       </main>
     );
