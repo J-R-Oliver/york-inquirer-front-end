@@ -31,3 +31,9 @@ export const getTopics = () => {
     return topics;
   });
 };
+
+export const patchVotes = (endpoint, id, increment) => {
+  return axios.patch(`${hostname}/api/${endpoint}/${id}`, {
+    inc_votes: increment
+  });
+};

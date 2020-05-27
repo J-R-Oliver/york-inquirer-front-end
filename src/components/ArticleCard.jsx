@@ -25,7 +25,7 @@ const ArticleCard = ({
         <Title>{title}</Title>
       </Link>
       <Text>
-        <Votes votes={votes} />
+        <Votes votes={votes} endpoint="articles" id={article_id} />
         <Comments comment_count={comment_count} />
       </Text>
       <Link to={`/${topic}`}>

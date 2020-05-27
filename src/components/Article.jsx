@@ -38,7 +38,7 @@ class Article extends Component {
 
   render() {
     const {
-      article: { title, author, created_at, topic, body, votes },
+      article: { title, author, created_at, topic, body, votes, article_id },
       comments,
       isLoading
     } = this.state;
@@ -57,11 +57,17 @@ class Article extends Component {
           </Link>
           <Text>{body}</Text>
           <Text>
-            <Votes votes={votes} />
+            <Votes votes={votes} endpoint="articles" id={article_id} />
           </Text>
         </article>
         {comments.map(({ comment_id, ...comment }) => {
-          return <CommentCard key={comment_id} {...comment} />;
+          return (
+            <CommentCard
+              key={comment_id}
+              comment_id={comment_id}
+              {...comment}
+            />
+          );
         })}
       </main>
     );

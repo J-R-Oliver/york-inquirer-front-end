@@ -3,7 +3,7 @@ import * as formatDate from '../utils/formatDate';
 import Text from './Text';
 import Votes from './Votes';
 
-const CommentCard = ({ author, created_at, body, votes }) => {
+const CommentCard = ({ author, created_at, body, votes, comment_id }) => {
   const createdDate = formatDate(created_at);
 
   return (
@@ -12,7 +12,7 @@ const CommentCard = ({ author, created_at, body, votes }) => {
       <Text>{createdDate}</Text>
       <Text>{body}</Text>
       <Text>
-        <Votes votes={votes} />
+        <Votes votes={votes} endpoint="comments" id={comment_id} />
       </Text>
     </article>
   );
