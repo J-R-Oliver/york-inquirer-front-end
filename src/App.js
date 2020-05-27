@@ -11,6 +11,7 @@ function App() {
       <Header />
       <Router>
         <ArticleList path="/" />
+        <ArticleList path="/:topic_slug" />
         <TopicList path="/explore" />
       </Router>
     </>

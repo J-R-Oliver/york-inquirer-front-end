@@ -14,7 +14,9 @@ class ArticleList extends Component {
   }
 
   fetchArticles() {
-    getArticles().then(articles => {
+    const { topic_slug } = this.props;
+
+    getArticles(topic_slug).then(articles => {
       this.setState({ articles, isLoading: false });
     });
   }
