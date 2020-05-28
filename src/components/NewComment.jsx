@@ -31,6 +31,7 @@ class NewComment extends Component {
           value={comment}
           placeholder="Add a comment..."
           aria-label="Add a comment..."
+          required
         />
         <Button type="submit">Submit</Button>
       </form>
