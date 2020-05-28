@@ -2,19 +2,19 @@ import React from 'react';
 import Button from './Button';
 
 const Sort = ({ updateSort }) => {
-  const handleSort = ({ target: { id } }) => {
+  const handleClick = ({ target: { id } }) => {
     updateSort(id);
   };
 
   return (
     <>
-      <Button type="button" id="created_at" onClick={handleSort}>
+      <Button type="button" id="created_at" onClick={handleClick}>
         Latest
       </Button>
-      <Button type="button" id="votes" onClick={handleSort}>
+      <Button type="button" id="votes" onClick={handleClick}>
         Top Rated
       </Button>
-      <Button type="button" id="comment_count" onClick={handleSort}>
+      <Button type="button" id="comment_count" onClick={handleClick}>
         Most Discussed
       </Button>
     </>
