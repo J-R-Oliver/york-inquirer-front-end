@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const hostname = 'https://the-york-inquirer.herokuapp.com';
 
-export const getArticles = topic => {
+export const getArticles = (sort_by, topic) => {
   return axios
-    .get(`${hostname}/api/articles`, { params: { topic } })
+    .get(`${hostname}/api/articles`, { params: { sort_by, topic } })
     .then(({ data: { articles } }) => {
       return articles;
     });
@@ -32,8 +32,19 @@ export const getTopics = () => {
   });
 };
 
-export const patchVotes = (endpoint, id, increment) => {
-  return axios.patch(`${hostname}/api/${endpoint}/${id}`, {
+export const patchVotes = (path, objectId, increment) => {
+  return axios.patch(`${hostname}/api/${path}/${objectId}`, {
     inc_votes: increment
   });
+};
+
+export const postComment = (article_id, username, body) => {
+  return axios
+    .post(`${hostname}/api/articles/${article_id}/comments`, {
+      username,
+      body
+    })
+    .then(({ data: { comment } }) => {
+      return comment;
+    });
 };
