@@ -13,11 +13,11 @@ class TopicList extends Component {
     this.fetchTopics();
   }
 
-  fetchTopics() {
+  fetchTopics = () => {
     getTopics().then(topics => {
       this.setState({ topics, isLoading: false });
     });
-  }
+  };
 
   render() {
     const { topics, isLoading } = this.state;

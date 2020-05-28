@@ -2,10 +2,10 @@ import React from 'react';
 import Text from './Text';
 
 const StagedCommentCard = ({
+  updateStagedComment,
   username,
   postCommentErr,
-  stagedComment,
-  updateStagedComment
+  stagedComment
 }) => {
   const handleClick = () => {
     updateStagedComment(stagedComment);

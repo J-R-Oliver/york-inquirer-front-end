@@ -24,21 +24,21 @@ class Article extends Component {
     this.fetchComments();
   }
 
-  fetchArticle() {
+  fetchArticle = () => {
     const { article_id } = this.props;
 
     getArticle(article_id).then(article => {
       this.setState({ article, isLoading: false });
     });
-  }
+  };
 
-  fetchComments() {
+  fetchComments = () => {
     const { article_id } = this.props;
 
     getComments(article_id).then(comments => {
       this.setState({ comments });
     });
-  }
+  };
 
   updateStagedComment = stagedComment => {
     const { article_id, username } = this.props;
