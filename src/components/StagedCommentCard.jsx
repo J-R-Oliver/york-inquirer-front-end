@@ -1,5 +1,6 @@
 import React from 'react';
 import Text from './Text';
+import Button from './Button';
 
 const StagedCommentCard = ({
   updateStagedComment,
@@ -16,9 +17,9 @@ const StagedCommentCard = ({
       <Text>{username}</Text>
       <Text>
         {postCommentErr ? (
-          <button type="button" onClick={handleClick}>
+          <Button type="button" onClick={handleClick}>
             Error posting Comment! Tap here to retry
-          </button>
+          </Button>
         ) : (
           'Posting...'
         )}
