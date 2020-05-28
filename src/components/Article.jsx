@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
-import { getArticle, getComments } from '../utils/api';
+import { getArticle, getComments, postComment } from '../utils/api';
 import * as formatDate from '../utils/formatDate';
 import Loading from './Loading';
 import Title from './Title';
 import Text from './Text';
 import Votes from './Votes';
+import NewComment from './NewComment';
+import StagedCommentCard from './StagedCommentCard';
 import CommentCard from './CommentCard';
 
 class Article extends Component {
   state = {
     article: {},
     comments: [],
+    stagedComment: null,
+    postCommentErr: false,
     isLoading: true
   };
 
@@ -36,12 +40,37 @@ class Article extends Component {
     });
   }
 
+  updateStagedComment = stagedComment => {
+    const { article_id, username } = this.props;
+
+    this.setState({ stagedComment });
+
+    postComment(article_id, username, stagedComment)
+      .then(comment => {
+        this.setState(({ comments }) => {
+          return {
+            comments: [comment, ...comments],
+            stagedComment: null,
+            postCommentErr: false
+          };
+        });
+      })
+      .catch(() => {
+        this.setState({ postCommentErr: true });
+      });
+  };
+
   render() {
     const {
       article: { title, author, created_at, topic, body, votes, article_id },
       comments,
+      stagedComment,
+      postCommentErr,
       isLoading
     } = this.state;
+    const { username } = this.props;
+    const { updateStagedComment } = this;
+
     const createdDate = formatDate(created_at);
 
     if (isLoading) return <Loading />;
@@ -57,9 +86,18 @@ class Article extends Component {
           </Link>
           <Text>{body}</Text>
           <Text>
-            <Votes votes={votes} endpoint="articles" id={article_id} />
+            <Votes votes={votes} path="articles" objectId={article_id} />
           </Text>
         </article>
+        <NewComment updateStagedComment={updateStagedComment} />
+        {stagedComment && (
+          <StagedCommentCard
+            stagedComment={stagedComment}
+            postCommentErr={postCommentErr}
+            username={username}
+            updateStagedComment={updateStagedComment}
+          />
+        )}
         {comments.map(({ comment_id, ...comment }) => {
           return (
             <CommentCard

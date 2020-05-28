@@ -12,7 +12,7 @@ const CommentCard = ({ author, created_at, body, votes, comment_id }) => {
       <Text>{createdDate}</Text>
       <Text>{body}</Text>
       <Text>
-        <Votes votes={votes} endpoint="comments" id={comment_id} />
+        <Votes votes={votes} path="comments" objectId={comment_id} />
       </Text>
     </article>
   );

@@ -6,48 +6,42 @@ class Votes extends Component {
     userVote: 0
   };
 
-  handleArrow = ({ target }) => {
-    const { endpoint, id } = this.props;
+  handleClick = ({ target: { id } }) => {
+    const { path, objectId } = this.props;
 
-    const userSelection = target.alt.split(' ')[0];
     const voteOptions = {
       up: 1,
       down: -1
     };
 
-    const userVote = voteOptions[userSelection];
+    const userVote = voteOptions[id];
     this.setState({ userVote });
 
-    patchVotes(endpoint, id, userVote);
+    patchVotes(path, objectId, userVote);
   };
 
   render() {
     const { userVote } = this.state;
     const { votes } = this.props;
+    const { handleClick } = this;
 
     return (
       <>
-        <button
-          type="button"
-          onClick={this.handleArrow}
-          disabled={userVote > 0}
-        >
+        <button type="button" onClick={handleClick} disabled={userVote > 0}>
           <img
             src="/images/arrow.png"
             alt="up arrow"
+            id="up"
             height="11px"
             width="11px"
           />
         </button>
         {userVote + votes}
-        <button
-          type="button"
-          onClick={this.handleArrow}
-          disabled={userVote < 0}
-        >
+        <button type="button" onClick={handleClick} disabled={userVote < 0}>
           <img
             src="/images/arrow.png"
             alt="down arrow"
+            id="down"
             height="11px"
             width="11px"
           />
