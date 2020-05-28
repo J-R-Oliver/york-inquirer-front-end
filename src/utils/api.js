@@ -50,5 +50,5 @@ export const postComment = (article_id, username, body) => {
 };
 
 export const deleteComment = comment_id => {
-  return axios.del(`${hostname}/api/comments/${comment_id}`);
+  return axios.delete(`${hostname}/api/comments/${comment_id}`);
 };

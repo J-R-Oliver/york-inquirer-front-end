@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
-import { getArticle, getComments, postComment } from '../utils/api';
+import {
+  getArticle,
+  getComments,
+  postComment,
+  deleteComment
+} from '../utils/api';
 import * as formatDate from '../utils/formatDate';
 import Loading from './Loading';
 import Title from './Title';
@@ -16,6 +21,7 @@ class Article extends Component {
     comments: [],
     stagedComment: null,
     postCommentErr: false,
+    deleteCommentId: null,
     isLoading: true
   };
 
@@ -60,16 +66,23 @@ class Article extends Component {
       });
   };
 
+  updateDeleteCommentId = deleteCommentId => {
+    this.setState({ deleteCommentId });
+
+    deleteComment(deleteCommentId);
+  };
+
   render() {
     const {
       article: { title, author, created_at, topic, body, votes, article_id },
       comments,
       stagedComment,
       postCommentErr,
+      deleteCommentId,
       isLoading
     } = this.state;
     const { username } = this.props;
-    const { updateStagedComment } = this;
+    const { updateStagedComment, updateDeleteCommentId } = this;
 
     const createdDate = formatDate(created_at);
 
@@ -99,13 +112,15 @@ class Article extends Component {
           />
         )}
         {comments.map(({ comment_id, ...comment }) => {
-          return (
+          return deleteCommentId !== comment_id ? (
             <CommentCard
               key={comment_id}
               comment_id={comment_id}
+              username={username}
               {...comment}
+              updateDeleteCommentId={updateDeleteCommentId}
             />
-          );
+          ) : null;
         })}
       </main>
     );
