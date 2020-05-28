@@ -70,6 +70,7 @@ class Article extends Component {
     this.setState({ deleteCommentId });
 
     deleteComment(deleteCommentId);
+    this.fetchComments();
   };
 
   render() {
