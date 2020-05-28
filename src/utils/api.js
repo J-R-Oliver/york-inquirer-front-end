@@ -48,3 +48,7 @@ export const postComment = (article_id, username, body) => {
       return comment;
     });
 };
+
+export const deleteComment = comment_id => {
+  return axios.del(`${hostname}/api/comments/${comment_id}`);
+};
