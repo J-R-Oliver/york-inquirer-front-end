@@ -15,6 +15,7 @@ const Error = ({ err }) => {
         <Link to="/">
           <Text>Why not check out some of our other context</Text>
         </Link>
+        <img src="/images/goose.png" alt="outline of a goose" />
       </article>
     </main>
   );
