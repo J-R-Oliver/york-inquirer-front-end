@@ -57,11 +57,11 @@ class CommentList extends Component {
     deleteComment(deleteCommentId)
       .then(() => {
         this.setState({ deleteCommentError: '' });
+        this.fetchComments();
       })
       .catch(() => {
         this.setState({ deleteCommentError: 'Error deleting Comment' });
       });
-    this.fetchComments();
   };
 
   render() {
@@ -76,10 +76,9 @@ class CommentList extends Component {
     const { username } = this.props;
     const { fetchComments, updateStagedComment, updateDeleteCommentId } = this;
 
-    if (err) return <RetryError err={err} retryFunction={fetchComments} />;
-
     return (
       <>
+        {err && <RetryError err={err} retryFunction={fetchComments} />}
         <NewComment updateStagedComment={updateStagedComment} />
         {stagedComment && (
           <StagedCommentCard
