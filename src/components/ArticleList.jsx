@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { getArticles } from '../utils/api';
 import Loading from './Loading';
+import CustomError from './CustomError';
+import RetryError from './RetryError';
 import Sort from './Sort';
 import ArticleCard from './ArticleCard';
 
@@ -8,7 +10,8 @@ class ArticleList extends Component {
   state = {
     articles: [],
     sort: 'created_at',
-    isLoading: true
+    isLoading: true,
+    err: ''
   };
 
   componentDidMount() {
@@ -27,9 +30,13 @@ class ArticleList extends Component {
     const { sort } = this.state;
     const { topic_slug } = this.props;
 
-    getArticles(sort, topic_slug).then(articles => {
-      this.setState({ articles, isLoading: false });
-    });
+    getArticles(sort, topic_slug)
+      .then(articles => {
+        this.setState({ articles, isLoading: false, err: '' });
+      })
+      .catch(({ message }) => {
+        this.setState({ isLoading: false, err: message });
+      });
   };
 
   updateSort = sort => {
@@ -37,10 +44,16 @@ class ArticleList extends Component {
   };
 
   render() {
-    const { articles, isLoading } = this.state;
-    const { updateSort } = this;
+    const { articles, isLoading, err } = this.state;
+    const { fetchArticles, updateSort } = this;
 
     if (isLoading) return <Loading />;
+    if (err !== 'Network Error' && err !== '') {
+      return <CustomError err={err} />;
+    }
+    if (err) {
+      return <RetryError err={err} retryFunction={fetchArticles} />;
+    }
 
     return (
       <main>
