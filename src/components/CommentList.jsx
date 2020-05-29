@@ -24,7 +24,7 @@ class CommentList extends Component {
 
     getComments(article_id)
       .then(comments => {
-        this.setState({ comments });
+        this.setState({ comments, err: '' });
       })
       .catch(({ message }) => {
         this.setState({ err: message });
@@ -59,7 +59,7 @@ class CommentList extends Component {
         this.setState({ deleteCommentError: '' });
       })
       .catch(() => {
-        this.setState({ deleteCommentError: 'Error deleting Comment.' });
+        this.setState({ deleteCommentError: 'Error deleting Comment' });
       });
     this.fetchComments();
   };
