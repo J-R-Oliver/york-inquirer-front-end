@@ -4,6 +4,7 @@ import Text from './Text';
 import Votes from './Votes';
 import Button from './Button';
 import ConfirmDialogue from './ConfirmDialogue';
+import RetryError from './RetryError';
 
 class CommentCard extends Component {
   state = {
@@ -24,6 +25,12 @@ class CommentCard extends Component {
     this.setState({ showConfirmDialogue: false });
   };
 
+  handleError = () => {
+    const { updateDeleteCommentId, comment_id } = this.props;
+
+    updateDeleteCommentId(comment_id);
+  };
+
   render() {
     const { showConfirmDialogue } = this.state;
     const {
@@ -32,9 +39,10 @@ class CommentCard extends Component {
       body,
       votes,
       comment_id,
-      username
+      username,
+      deleteCommentError
     } = this.props;
-    const { handleClick, updateShowConfirmDialogue } = this;
+    const { handleClick, updateShowConfirmDialogue, handleError } = this;
 
     const createdDate = formatDate(created_at);
 
@@ -43,10 +51,8 @@ class CommentCard extends Component {
         <Text>{author}</Text>
         <Text>{createdDate}</Text>
         <Text>{body}</Text>
-        <Text>
-          <Votes votes={votes} path="comments" objectId={comment_id} />
-        </Text>
-        {author === username && (
+        <Votes votes={votes} path="comments" objectId={comment_id} />
+        {author === username && !deleteCommentError && (
           <Button type="button" onClick={handleClick}>
             Delete
           </Button>
@@ -55,6 +61,9 @@ class CommentCard extends Component {
           <ConfirmDialogue
             updateShowConfirmDialogue={updateShowConfirmDialogue}
           />
+        )}
+        {deleteCommentError && (
+          <RetryError err={deleteCommentError} retryFunction={handleError} />
         )}
       </article>
     );

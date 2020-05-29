@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getComments, postComment, deleteComment } from '../utils/api';
+import RetryError from './RetryError';
 import NewComment from './NewComment';
 import StagedCommentCard from './StagedCommentCard';
 import CommentCard from './CommentCard';
@@ -7,9 +8,11 @@ import CommentCard from './CommentCard';
 class CommentList extends Component {
   state = {
     comments: [],
-    stagedComment: null,
-    postCommentErr: false,
-    deleteCommentId: null
+    err: '',
+    stagedComment: '',
+    postCommentErr: '',
+    deleteCommentId: null,
+    deleteCommentError: ''
   };
 
   componentDidMount() {
@@ -19,9 +22,13 @@ class CommentList extends Component {
   fetchComments = () => {
     const { article_id } = this.props;
 
-    getComments(article_id).then(comments => {
-      this.setState({ comments });
-    });
+    getComments(article_id)
+      .then(comments => {
+        this.setState({ comments });
+      })
+      .catch(({ message }) => {
+        this.setState({ err: message });
+      });
   };
 
   updateStagedComment = stagedComment => {
@@ -35,31 +42,41 @@ class CommentList extends Component {
           return {
             comments: [comment, ...comments],
             stagedComment: null,
-            postCommentErr: false
+            postCommentErr: ''
           };
         });
       })
       .catch(() => {
-        this.setState({ postCommentErr: true });
+        this.setState({ postCommentErr: 'Error posting Vote.' });
       });
   };
 
   updateDeleteCommentId = deleteCommentId => {
     this.setState({ deleteCommentId });
 
-    deleteComment(deleteCommentId);
+    deleteComment(deleteCommentId)
+      .then(() => {
+        this.setState({ deleteCommentError: '' });
+      })
+      .catch(() => {
+        this.setState({ deleteCommentError: 'Error deleting Comment.' });
+      });
     this.fetchComments();
   };
 
   render() {
     const {
       comments,
+      err,
       stagedComment,
       postCommentErr,
-      deleteCommentId
+      deleteCommentId,
+      deleteCommentError
     } = this.state;
     const { username } = this.props;
-    const { updateStagedComment, updateDeleteCommentId } = this;
+    const { fetchComments, updateStagedComment, updateDeleteCommentId } = this;
+
+    if (err) return <RetryError err={err} retryFunction={fetchComments} />;
 
     return (
       <>
@@ -72,6 +89,19 @@ class CommentList extends Component {
             updateStagedComment={updateStagedComment}
           />
         )}
+        {deleteCommentError &&
+          comments.map(({ comment_id, ...comment }) => {
+            return deleteCommentId === comment_id ? (
+              <CommentCard
+                key={comment_id}
+                comment_id={comment_id}
+                username={username}
+                deleteCommentError={deleteCommentError}
+                {...comment}
+                updateDeleteCommentId={updateDeleteCommentId}
+              />
+            ) : null;
+          })}
         {comments.map(({ comment_id, ...comment }) => {
           return deleteCommentId !== comment_id ? (
             <CommentCard
