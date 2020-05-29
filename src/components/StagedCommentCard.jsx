@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from './Text';
-import Button from './Button';
+import RetryError from './RetryError';
 
 const StagedCommentCard = ({
   updateStagedComment,
@@ -8,7 +8,7 @@ const StagedCommentCard = ({
   postCommentErr,
   stagedComment
 }) => {
-  const handleClick = () => {
+  const handleError = () => {
     updateStagedComment(stagedComment);
   };
 
@@ -17,9 +17,7 @@ const StagedCommentCard = ({
       <Text>{username}</Text>
       <Text>
         {postCommentErr ? (
-          <Button type="button" onClick={handleClick}>
-            Error posting Comment! Tap here to retry
-          </Button>
+          <RetryError err={postCommentErr} retryFunction={handleError} />
         ) : (
           'Posting...'
         )}
