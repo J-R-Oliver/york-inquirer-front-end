@@ -14,7 +14,7 @@ class Article extends Component {
   state = {
     article: {},
     isLoading: true,
-    err: false
+    err: ''
   };
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class Article extends Component {
 
     getArticle(article_id)
       .then(article => {
-        this.setState({ article, isLoading: false, err: null });
+        this.setState({ article, isLoading: false, err: '' });
       })
       .catch(({ message }) => {
         this.setState({ isLoading: false, err: message });
