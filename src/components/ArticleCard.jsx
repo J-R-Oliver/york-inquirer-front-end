@@ -21,11 +21,11 @@ const ArticleCard = ({
     <article>
       <Text>{author}</Text>
       <Text>{createdDate}</Text>
-      <Link to={`/${topic}/${article_id}`}>
+      <Link to={`/read/${article_id}`}>
         <Title>{title}</Title>
       </Link>
+      <Votes votes={votes} path="articles" objectId={article_id} />
       <Text>
-        <Votes votes={votes} path="articles" objectId={article_id} />
         <Comments comment_count={comment_count} />
       </Text>
       <Link to={`/${topic}`}>

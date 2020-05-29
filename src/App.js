@@ -5,6 +5,7 @@ import Header from './components/Header';
 import ArticleList from './components/ArticleList';
 import TopicList from './components/TopicList';
 import Article from './components/Article';
+import CustomError from './components/CustomError';
 
 class App extends Component {
   state = {
@@ -21,7 +22,8 @@ class App extends Component {
           <ArticleList path="/" />
           <ArticleList path="/:topic_slug" />
           <TopicList path="/explore" />
-          <Article path="/:topic_slug/:article_id" username={username} />
+          <Article path="/read/:article_id" username={username} />
+          <CustomError default />
         </Router>
       </>
     );
