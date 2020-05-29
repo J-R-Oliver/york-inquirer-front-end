@@ -22,15 +22,10 @@ class Votes extends Component {
       });
   };
 
-  handleClick = ({ target: { id } }) => {
-    const voteOptions = {
-      up: 1,
-      down: -1
-    };
-
-    const userVote = voteOptions[id];
-    this.setState({ userVote });
-    this.updateVotes();
+  handleClick = userSelection => {
+    this.setState(currentState => {
+      return { userVote: currentState.userVote + userSelection };
+    }, this.updateVotes);
   };
 
   handleError = () => {
@@ -45,21 +40,27 @@ class Votes extends Component {
     return (
       <>
         <Text>
-          <button type="button" onClick={handleClick} disabled={userVote > 0}>
+          <button
+            type="button"
+            onClick={() => handleClick(1)}
+            disabled={userVote > 0}
+          >
             <img
               src="/images/arrow.png"
               alt="up arrow"
-              id="up"
               height="11px"
               width="11px"
             />
           </button>
           {userVote + votes}
-          <button type="button" onClick={handleClick} disabled={userVote < 0}>
+          <button
+            type="button"
+            onClick={() => handleClick(-1)}
+            disabled={userVote < 0}
+          >
             <img
               src="/images/arrow.png"
               alt="down arrow"
-              id="down"
               height="11px"
               width="11px"
             />
