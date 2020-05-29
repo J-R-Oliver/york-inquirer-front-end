@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { getTopics } from '../utils/api';
 import Loading from './Loading';
+import RetryError from './RetryError';
 import TopicCard from './TopicCard';
 
 class TopicList extends Component {
   state = {
     topics: [],
-    isLoading: true
+    isLoading: true,
+    err: ''
   };
 
   componentDidMount() {
@@ -14,15 +16,21 @@ class TopicList extends Component {
   }
 
   fetchTopics = () => {
-    getTopics().then(topics => {
-      this.setState({ topics, isLoading: false });
-    });
+    getTopics()
+      .then(topics => {
+        this.setState({ topics, isLoading: false, err: '' });
+      })
+      .catch(({ message }) => {
+        this.setState({ isLoading: false, err: message });
+      });
   };
 
   render() {
-    const { topics, isLoading } = this.state;
+    const { topics, isLoading, err } = this.state;
+    const { fetchTopics } = this;
 
     if (isLoading) return <Loading />;
+    if (err) return <RetryError err={err} retryFunction={fetchTopics} />;
 
     return (
       <main>
