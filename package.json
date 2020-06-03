@@ -19,12 +19,13 @@
     "test": "react-scripts test",
     "test-utils": "jest ./src/utils/__tests__",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint-css": "stylelint ./src"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint & npm run test-utils",
-      "pre-push": "npm run lint && npm run test-utils"
+      "pre-commit": "npm run lint && npm run lint-css && npm run test-utils",
+      "pre-push": "npm run lint && npm run lint-css && npm run test-utils"
     }
   },
   "browserslist": {
@@ -49,6 +50,11 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "husky": "^4.2.5",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "stylelint": "^13.5.0",
+    "stylelint-config-idiomatic-order": "^8.1.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-config-styled-components": "^0.1.1"
   }
 }
