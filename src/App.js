@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -15,7 +14,10 @@ const StyledWrapper = styled.div`
   min-height: 100vh;
   background-color: rgb(250, 250, 250);
   grid-template-areas: '. . .' '. main .' '. footer .';
-  grid-template-columns: minmax(30px, 1fr) minmax(300px, 1008px) minmax(30px, 1fr);
+  grid-template-columns:
+    minmax(30px, 1fr)
+    minmax(300px, 1008px)
+    minmax(30px, 1fr);
   grid-template-rows: 50px auto 36px;
 `;
 
