@@ -16,16 +16,16 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test-utils": "jest ./src/utils/__tests__",
+    "pretest": "npm run lint && npm run lint-css",
+    "test": "CI=true react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
     "lint-css": "stylelint ./src"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run lint-css && npm run test-utils",
-      "pre-push": "npm run lint && npm run lint-css && npm run test-utils"
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
     }
   },
   "browserslist": {
